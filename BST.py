@@ -7,6 +7,7 @@ class Node:
 class bst:
     def __init__(self):
         self.root=None
+        self.item_count=0
     def insert(self,data):
         self.root=self.rinsert(self.root,data)
     def rinsert(self,root,data):
@@ -54,4 +55,32 @@ class bst:
             self.rinorder(root.left,result)
             result.append(root.item)
             self.rinorder(root.right,result)
-            
+    def min_value(self,temp):
+        current=temp
+        while current.left is not None:
+            current=current.left
+        return current.item
+    def min_value(self,temp):
+        current=temp
+        while current.right is not None:
+            current=current.right
+        return current.item
+    def delete(self,data):
+        self.root=self.rdelete(self.root,data)
+    def rdelete(self,root,data):
+        if root is None:
+            return None
+        if data < root.item:
+            root.left=self.rdelete(root.left,data)
+        elif data>root.item:
+            root.right=self.rdelete(root.right,data)
+        else:
+            if root.left is None:
+                return root.right
+            elif root.right is None:
+                return root.left
+            root.item=self.min_value(root.right)
+            self.rdelete(root.right,root.item)
+        return root
+    def size(self):
+        return len(self.inorder())
